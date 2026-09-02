@@ -1,0 +1,77 @@
+/**
+ * Fargo Freights - Global Design Tokens & Variables
+ * Strict adherence to brand color #015FF0, crisp whites, dark text, modern typography.
+ */
+
+:root {
+  /* Brand Colors */
+  --ff-primary: #015FF0;
+  --ff-primary-hover: #004ecc;
+  --ff-primary-active: #003fa6;
+  --ff-primary-light: #EBF3FF;
+  --ff-primary-subtle: #F4F8FF;
+  --ff-primary-glow: rgba(1, 95, 240, 0.25);
+  
+  /* Dark & Navy Accents */
+  --ff-dark: #0A1426;
+  --ff-dark-card: #0F1F38;
+  --ff-dark-surface: #152744;
+  --ff-navy: #1E293B;
+  --ff-navy-light: #334155;
+  
+  /* Neutral & Slate Spectrum */
+  --ff-text-main: #0F172A;
+  --ff-text-muted: #475569;
+  --ff-text-subtle: #64748B;
+  --ff-text-inverse: #FFFFFF;
+  
+  --ff-bg-white: #FFFFFF;
+  --ff-bg-light: #F8FAFC;
+  --ff-bg-subtle: #F1F5F9;
+  --ff-bg-alt: #EFF6FF;
+  
+  --ff-border: #E2E8F0;
+  --ff-border-focus: #015FF0;
+  --ff-border-subtle: #F1F5F9;
+
+  /* Accent & Functional Status Colors */
+  --ff-success: #10B981;
+  --ff-success-light: #ECFDF5;
+  --ff-warning: #F59E0B;
+  --ff-warning-light: #FFFBEB;
+  --ff-danger: #EF4444;
+  --ff-danger-light: #FEF2F2;
+  --ff-star: #FBBF24;
+
+  /* Typography */
+  --ff-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --ff-font-heading: 'Outfit', 'Inter', -apple-system, sans-serif;
+  
+  /* Shadows & Elevations */
+  --ff-shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --ff-shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --ff-shadow-md: 0 6px 16px -2px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.05);
+  --ff-shadow-lg: 0 12px 28px -4px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.06);
+  --ff-shadow-xl: 0 24px 48px -12px rgba(15, 23, 42, 0.18), 0 8px 16px -4px rgba(15, 23, 42, 0.08);
+  --ff-shadow-primary: 0 8px 24px -4px rgba(1, 95, 240, 0.35);
+
+  /* Border Radii */
+  --ff-radius-sm: 6px;
+  --ff-radius-md: 10px;
+  --ff-radius-lg: 16px;
+  --ff-radius-xl: 24px;
+  --ff-radius-full: 9999px;
+
+  /* Layout & Spacing */
+  --ff-container-max: 1280px;
+  --ff-container-narrow: 960px;
+  --ff-header-height: 84px;
+  --ff-topbar-height: 38px;
+  --ff-header-total: 122px;
+
+  /* Transitions */
+  --ff-transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --ff-transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --ff-transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --ff-transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}

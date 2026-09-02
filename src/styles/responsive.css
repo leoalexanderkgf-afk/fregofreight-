@@ -1,0 +1,150 @@
+/**
+ * Fargo Freights - Responsive Breakpoints & Mobile Optimization
+ */
+
+@media (max-width: 1200px) {
+  .ff-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .ff-stat-card:nth-child(3) {
+    border-right: none;
+  }
+  .ff-process-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ff-equipment-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .ff-topbar {
+    display: none;
+  }
+  .ff-nav-list {
+    display: none;
+  }
+  .ff-mobile-toggle {
+    display: block;
+  }
+  .ff-header-cta {
+    display: none;
+  }
+  .ff-split-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .ff-split-layout.reversed {
+    direction: ltr;
+  }
+  .ff-split-visual {
+    order: -1;
+  }
+  .ff-split-img {
+    height: 340px;
+  }
+  .ff-quote-grid {
+    grid-template-columns: 1fr;
+  }
+  .ff-quote-preview-side {
+    padding: 2.5rem 2rem;
+  }
+  .ff-quote-form-side {
+    padding: 2.5rem 2rem;
+  }
+  .ff-why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ff-testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+  .ff-location-grid {
+    grid-template-columns: 1fr;
+  }
+  .ff-map-frame-wrap {
+    min-height: 320px;
+  }
+  .ff-location-info {
+    padding: 2.5rem 2rem;
+  }
+  .ff-footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+  .ff-carrier-card {
+    padding: 2.25rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ff-section {
+    padding: 3.75rem 0;
+  }
+  .ff-hero-slider {
+    height: 580px;
+  }
+  .ff-stats-bar {
+    margin-top: -2rem;
+    padding: 2rem 1.5rem;
+  }
+  .ff-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .ff-grid-2,
+  .ff-grid-3,
+  .ff-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .ff-process-grid {
+    grid-template-columns: 1fr;
+  }
+  .ff-equipment-grid {
+    grid-template-columns: 1fr;
+  }
+  .ff-why-grid {
+    grid-template-columns: 1fr;
+  }
+  .ff-footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .ff-footer-bottom {
+    flex-direction: column;
+    gap: 1.25rem;
+    text-align: center;
+  }
+  .ff-cta-card {
+    padding: 3rem 1.5rem;
+  }
+  .ff-hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .ff-hero-actions .ff-btn {
+    width: 100%;
+  }
+  .ff-floating-actions {
+    display: none;
+  }
+  .back-to-top {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ff-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .ff-stat-card {
+    border-right: none;
+    border-bottom: 1px solid var(--ff-border);
+    padding-bottom: 1.25rem;
+  }
+  .ff-stat-card:last-child {
+    border-bottom: none;
+  }
+}

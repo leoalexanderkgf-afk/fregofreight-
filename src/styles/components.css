@@ -342,6 +342,10 @@
   color: #FFFFFF;
 }
 
+.ff-hero-badge-wrap {
+  margin-bottom: 0.75rem;
+}
+
 .ff-hero-title {
   color: #FFFFFF;
   margin-bottom: 1.25rem;
@@ -359,6 +363,34 @@
   display: flex;
   gap: 1.25rem;
   flex-wrap: wrap;
+}
+
+/* Active Slide Staggered Entrance Animations */
+.ff-slide.active .ff-hero-badge-wrap {
+  animation: ffHeroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.ff-slide.active .ff-hero-title {
+  animation: ffHeroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+}
+
+.ff-slide.active .ff-hero-desc {
+  animation: ffHeroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+}
+
+.ff-slide.active .ff-hero-actions {
+  animation: ffHeroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.46s both;
+}
+
+@keyframes ffHeroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Slider Controls */

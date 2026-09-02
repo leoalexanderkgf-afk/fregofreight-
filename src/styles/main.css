@@ -379,8 +379,8 @@ img, svg {
 /* Animations & Scroll Reveals */
 .animate-on-scroll {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(24px);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -389,10 +389,28 @@ img, svg {
   transform: translateY(0);
 }
 
-.delay-1 { transition-delay: 0.1s; }
-.delay-2 { transition-delay: 0.2s; }
-.delay-3 { transition-delay: 0.3s; }
-.delay-4 { transition-delay: 0.4s; }
+.delay-1 { transition-delay: 0.08s; }
+.delay-2 { transition-delay: 0.16s; }
+.delay-3 { transition-delay: 0.24s; }
+.delay-4 { transition-delay: 0.32s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after,
+  .animate-on-scroll,
+  .animate-on-scroll.revealed,
+  .ff-slide.active .ff-hero-badge-wrap,
+  .ff-slide.active .ff-hero-title,
+  .ff-slide.active .ff-hero-desc,
+  .ff-slide.active .ff-hero-actions {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
 
 /* Toast Container */
 .ff-toast-container {

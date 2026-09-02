@@ -3,42 +3,76 @@
  */
 
 export function initScrollReveal() {
-  const elements = document.querySelectorAll('.animate-on-scroll:not(.revealed)');
-  
-  const observer = new IntersectionObserver(
-    (entries, obs) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          obs.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-  );
+  // If user prefers reduced motion, reveal everything immediately
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.animate-on-scroll').forEach(el => el.classList.add('revealed'));
+    return;
+  }
 
-  elements.forEach((el) => observer.observe(el));
+  const elements = document.querySelectorAll('.animate-on-scroll:not(.revealed)');
+  if (!elements.length) return;
+
+  // Immediately reveal elements already inside or near the initial viewport
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  elements.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top <= viewportHeight + 40) {
+      el.classList.add('revealed');
+    }
+  });
+
+  // Observe remaining below-the-fold elements
+  const remaining = document.querySelectorAll('.animate-on-scroll:not(.revealed)');
+  if (!remaining.length) return;
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.05, rootMargin: '0px 0px 60px 0px' }
+    );
+
+    remaining.forEach((el) => observer.observe(el));
+  } else {
+    // Fallback for older browsers
+    remaining.forEach(el => el.classList.add('revealed'));
+  }
 }
 
 export function initCounters() {
   const counterElements = document.querySelectorAll('.counter-val:not(.counted)');
+  if (!counterElements.length) return;
 
-  const observer = new IntersectionObserver(
-    (entries, obs) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          el.classList.add('counted');
-          const targetStr = el.getAttribute('data-target') || '0';
-          animateCount(el, targetStr);
-          obs.unobserve(el);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            el.classList.add('counted');
+            const targetStr = el.getAttribute('data-target') || '0';
+            animateCount(el, targetStr);
+            obs.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
 
-  counterElements.forEach((el) => observer.observe(el));
+    counterElements.forEach((el) => observer.observe(el));
+  } else {
+    counterElements.forEach((el) => {
+      el.classList.add('counted');
+      const targetStr = el.getAttribute('data-target') || '0';
+      animateCount(el, targetStr);
+    });
+  }
 }
 
 function animateCount(el, targetStr) {
@@ -53,14 +87,14 @@ function animateCount(el, targetStr) {
   }
 
   let start = 0;
-  const duration = 1600;
+  const duration = 1400;
   const startTime = performance.now();
 
   function update(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
     
-    // Ease out quart
+    // Smooth easeOutQuart
     const ease = 1 - Math.pow(1 - progress, 4);
     const current = Math.floor(start + (numeric - start) * ease);
 
@@ -85,31 +119,39 @@ function animateCount(el, targetStr) {
   requestAnimationFrame(update);
 }
 
+let backToTopScrollBound = false;
+
 export function initBackToTop() {
   const btn = document.getElementById('back-to-top');
   if (!btn) return;
 
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? (scrolled / docHeight) * 100 : 0;
+  if (!backToTopScrollBound) {
+    backToTopScrollBound = true;
+    window.addEventListener('scroll', () => {
+      const currentBtn = document.getElementById('back-to-top');
+      if (!currentBtn) return;
 
-    if (scrolled > 300) {
-      btn.classList.add('visible');
-    } else {
-      btn.classList.remove('visible');
-    }
+      const scrolled = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrolled / docHeight) * 100 : 0;
 
-    const circle = btn.querySelector('.progress-ring-circle');
-    if (circle) {
-      const radius = circle.r.baseVal.value;
-      const circumference = 2 * Math.PI * radius;
-      const offset = circumference - (progress / 100) * circumference;
-      circle.style.strokeDashoffset = offset;
-    }
-  });
+      if (scrolled > 300) {
+        currentBtn.classList.add('visible');
+      } else {
+        currentBtn.classList.remove('visible');
+      }
 
-  btn.addEventListener('click', () => {
+      const circle = currentBtn.querySelector('.progress-ring-circle');
+      if (circle) {
+        const radius = circle.r.baseVal.value;
+        const circumference = 2 * Math.PI * radius;
+        const offset = circumference - (progress / 100) * circumference;
+        circle.style.strokeDashoffset = offset;
+      }
+    }, { passive: true });
+  }
+
+  btn.onclick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  };
 }

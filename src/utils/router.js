@@ -1,17 +1,24 @@
 /**
- * Fargo Freights - Client-Side PushState Router
+ * Fargo Freights - Client-Side PushState Router & View Engine
  */
 
 export class Router {
-  constructor(routes, rootElementId = 'app') {
+  constructor(routes, rootElementId = 'app', onRouteChange = null) {
     this.routes = routes;
+    this.rootElementId = rootElementId;
     this.rootElement = document.getElementById(rootElementId);
+    this.onRouteChange = onRouteChange;
     this.currentRoute = null;
 
     this.init();
   }
 
   init() {
+    if (!this.rootElement) {
+      this.rootElement = document.getElementById(this.rootElementId);
+    }
+
+    // Listen for browser back/forward navigation
     window.addEventListener('popstate', () => this.handleRoute());
 
     // Intercept clicks on internal links
@@ -22,18 +29,21 @@ export class Router {
       const href = link.getAttribute('href');
       if (!href) return;
 
-      // Check if it's an internal link
+      // Handle standard anchor jumps on current page
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        this.scrollToHash(href);
+        return;
+      }
+
+      // Check if it's an internal pushState link
       if (href.startsWith('/') && !href.startsWith('//') && !link.hasAttribute('download') && link.target !== '_blank') {
         e.preventDefault();
         this.navigate(href);
-      } else if (href.startsWith('#')) {
-        // Hash jump on current page
-        e.preventDefault();
-        this.scrollToHash(href);
       }
     });
 
-    // Handle initial route
+    // Handle initial route immediately
     this.handleRoute();
   }
 
@@ -56,49 +66,64 @@ export class Router {
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
-        top: offsetPosition,
+        top: Math.max(0, offsetPosition),
         behavior: 'smooth'
       });
     }
   }
 
   handleRoute() {
-    const path = window.location.pathname.toLowerCase();
+    if (!this.rootElement) {
+      this.rootElement = document.getElementById(this.rootElementId);
+    }
+    if (!this.rootElement) return;
+
+    const rawPath = window.location.pathname.toLowerCase();
     const hash = window.location.hash;
 
-    // Normalize path
-    let cleanPath = path;
+    // Normalize path (strip trailing slash)
+    let cleanPath = rawPath;
     if (cleanPath.length > 1 && cleanPath.endsWith('/')) {
       cleanPath = cleanPath.slice(0, -1);
     }
 
-    let routeHandler = this.routes[cleanPath] || this.routes['/'];
-
+    const routeHandler = this.routes[cleanPath] || this.routes['/'];
     this.currentRoute = cleanPath;
 
-    if (this.rootElement) {
+    try {
       // Render view
-      this.rootElement.innerHTML = '';
       const pageComponent = routeHandler();
       
       if (typeof pageComponent === 'string') {
         this.rootElement.innerHTML = pageComponent;
       } else if (pageComponent instanceof Node) {
+        this.rootElement.innerHTML = '';
         this.rootElement.appendChild(pageComponent);
       }
 
-      // Update active links in nav
+      // Update active nav links
       this.updateActiveNavLinks(cleanPath);
 
       // Scroll behavior
       if (hash) {
-        setTimeout(() => this.scrollToHash(hash), 100);
+        setTimeout(() => this.scrollToHash(hash), 60);
       } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }
 
-      // Dispatch custom event for page mount & init animation hooks
+      // Direct callback trigger
+      if (typeof this.onRouteChange === 'function') {
+        this.onRouteChange(cleanPath);
+      }
+
+      // Global event trigger
       window.dispatchEvent(new CustomEvent('pageRendered', { detail: { path: cleanPath } }));
+    } catch (err) {
+      console.error('[Router Error]:', err);
+      // Fallback safe render if an error occurred
+      if (this.routes['/'] && cleanPath !== '/') {
+        this.navigate('/');
+      }
     }
   }
 
@@ -106,7 +131,7 @@ export class Router {
     const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
     navLinks.forEach((link) => {
       const href = link.getAttribute('href');
-      if (href === currentPath || (currentPath === '/' && href === '/') || (href !== '/' && currentPath.startsWith(href))) {
+      if (href === currentPath || (currentPath === '/' && href === '/') || (href && href !== '/' && currentPath.startsWith(href))) {
         link.classList.add('active');
       } else {
         link.classList.remove('active');

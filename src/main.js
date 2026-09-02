@@ -45,12 +45,11 @@ const routes = {
   '/terms': TermsPage
 };
 
-// Initialize Router
-const router = new Router(routes, 'app');
-
-// Wire up event initializers on every page render
-window.addEventListener('pageRendered', (e) => {
-  const path = e.detail?.path || '/';
+/**
+ * Initialize components and event handlers for the active route
+ */
+function handlePageInit(path) {
+  const currentPath = path || window.location.pathname.toLowerCase() || '/';
 
   // Common UI handlers
   initHeaderEvents();
@@ -60,15 +59,36 @@ window.addEventListener('pageRendered', (e) => {
   initNewsletter();
 
   // Page-specific initializers
-  if (path === '/' || path === '/home') {
+  if (currentPath === '/' || currentPath === '/home' || currentPath === '') {
     initHeroSlider();
     initHomeQuickCarrier();
     initHomeContact();
-  } else if (path === '/become-a-carrier') {
+  } else if (currentPath === '/become-a-carrier') {
     initCarrierForm();
-  } else if (path === '/contact') {
+  } else if (currentPath === '/contact') {
     initContactForm();
-  } else if (path === '/reviews') {
+  } else if (currentPath === '/reviews') {
     initReviewForm();
   }
+}
+
+// Global pageRendered listener
+window.addEventListener('pageRendered', (e) => {
+  const path = e.detail?.path || '/';
+  handlePageInit(path);
 });
+
+// Initialize Router with direct callback hook to guarantee initial render execution
+const router = new Router(routes, 'app', (path) => {
+  handlePageInit(path);
+});
+
+// Immediate guarantee for first load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    handlePageInit(window.location.pathname);
+  });
+} else {
+  // DOM already loaded
+  handlePageInit(window.location.pathname);
+}

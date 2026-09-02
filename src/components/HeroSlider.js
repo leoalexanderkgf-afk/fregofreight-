@@ -41,16 +41,18 @@ export function HeroSlider() {
           <div class="ff-slide-overlay"></div>
           <div class="ff-container" style="position: relative; z-index: 3;">
             <div class="ff-hero-content">
-              <span class="ff-badge ff-badge-white animate-on-scroll">
-                ${icon('ShieldCheck', '', 14)} ${slide.badge}
-              </span>
-              <h1 class="ff-hero-title animate-on-scroll delay-1">
+              <div class="ff-hero-badge-wrap">
+                <span class="ff-badge ff-badge-white">
+                  ${icon('ShieldCheck', '', 14)} ${slide.badge}
+                </span>
+              </div>
+              <h1 class="ff-hero-title">
                 ${slide.title}
               </h1>
-              <p class="ff-hero-desc animate-on-scroll delay-2">
+              <p class="ff-hero-desc">
                 ${slide.desc}
               </p>
-              <div class="ff-hero-actions animate-on-scroll delay-3">
+              <div class="ff-hero-actions">
                 <a href="${slide.primaryBtn.link}" class="ff-btn ff-btn-primary ff-btn-lg">
                   ${slide.primaryBtn.text} ${icon('ArrowRight', '', 18)}
                 </a>
@@ -70,7 +72,7 @@ export function HeroSlider() {
         </button>
         <div class="ff-slider-dots" id="hero-dots">
           ${slides.map((_, idx) => `
-            <div class="ff-dot ${idx === 0 ? 'active' : ''}" data-dot="${idx}" role="button" aria-label="Slide ${idx + 1}"></div>
+            <div class="ff-dot ${idx === 0 ? 'active' : ''}" data-dot="${idx}" role="button" tabindex="0" aria-label="Slide ${idx + 1}"></div>
           `).join('')}
         </div>
         <button class="ff-slider-arrow" id="hero-next-btn" aria-label="Next Slide">
@@ -81,9 +83,15 @@ export function HeroSlider() {
   `;
 }
 
+let activeHeroTimer = null;
+
 export function initHeroSlider() {
   const slider = document.getElementById('hero-slider');
   if (!slider) return;
+
+  // Prevent multiple duplicate initializations
+  if (slider.dataset.initialized === 'true') return;
+  slider.dataset.initialized = 'true';
 
   const slides = slider.querySelectorAll('.ff-slide');
   const dots = slider.querySelectorAll('.ff-dot');
@@ -91,8 +99,12 @@ export function initHeroSlider() {
   const nextBtn = document.getElementById('hero-next-btn');
 
   let currentSlide = 0;
-  let timer = null;
   const totalSlides = slides.length;
+
+  if (activeHeroTimer) {
+    clearInterval(activeHeroTimer);
+    activeHeroTimer = null;
+  }
 
   function goToSlide(index) {
     slides[currentSlide]?.classList.remove('active');
@@ -106,15 +118,15 @@ export function initHeroSlider() {
 
   function startAutoplay() {
     stopAutoplay();
-    timer = setInterval(() => {
+    activeHeroTimer = setInterval(() => {
       goToSlide(currentSlide + 1);
-    }, 6000); // 6 second professional interval
+    }, 6000);
   }
 
   function stopAutoplay() {
-    if (timer) {
-      clearInterval(timer);
-      timer = null;
+    if (activeHeroTimer) {
+      clearInterval(activeHeroTimer);
+      activeHeroTimer = null;
     }
   }
 
@@ -132,6 +144,12 @@ export function initHeroSlider() {
     dot.addEventListener('click', () => {
       goToSlide(idx);
       startAutoplay();
+    });
+    dot.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        goToSlide(idx);
+        startAutoplay();
+      }
     });
   });
 

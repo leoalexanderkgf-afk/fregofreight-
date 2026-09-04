@@ -120,7 +120,7 @@ export function initHeroSlider() {
     stopAutoplay();
     activeHeroTimer = setInterval(() => {
       goToSlide(currentSlide + 1);
-    }, 6000);
+    }, 2200); // Fast 2.2-second smooth auto-cycle
   }
 
   function stopAutoplay() {

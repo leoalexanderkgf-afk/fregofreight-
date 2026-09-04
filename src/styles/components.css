@@ -299,7 +299,7 @@
   inset: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s;
   display: flex;
   align-items: center;
 }
@@ -365,27 +365,27 @@
   flex-wrap: wrap;
 }
 
-/* Active Slide Staggered Entrance Animations */
+/* Active Slide Staggered Entrance Animations (Fall Down) */
 .ff-slide.active .ff-hero-badge-wrap {
-  animation: ffHeroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+  animation: ffHeroFadeDown 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
 }
 
 .ff-slide.active .ff-hero-title {
-  animation: ffHeroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
+  animation: ffHeroFadeDown 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.14s both;
 }
 
 .ff-slide.active .ff-hero-desc {
-  animation: ffHeroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.34s both;
+  animation: ffHeroFadeDown 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.22s both;
 }
 
 .ff-slide.active .ff-hero-actions {
-  animation: ffHeroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.46s both;
+  animation: ffHeroFadeDown 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.30s both;
 }
 
-@keyframes ffHeroFadeUp {
+@keyframes ffHeroFadeDown {
   0% {
     opacity: 0;
-    transform: translateY(22px);
+    transform: translateY(-26px);
   }
   100% {
     opacity: 1;
@@ -1064,52 +1064,97 @@
   }
 }
 
-.ff-partner-pill {
-  display: inline-flex;
+.ff-letterbox-card {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1.15rem;
-  background-color: #FFFFFF;
-  padding: 0.85rem 1.65rem;
-  border-radius: var(--ff-radius-full);
-  border: 1px solid var(--ff-border);
-  box-shadow: 0 2px 8px rgba(10, 20, 38, 0.04);
-  white-space: nowrap;
-  transition: all var(--ff-transition-fast);
+  justify-content: center;
+  width: 140px;
+  height: 140px;
+  min-width: 140px;
+  min-height: 140px;
+  border-radius: 18px;
+  padding: 1rem 0.75rem;
+  text-align: center;
+  transition: all var(--ff-transition-normal);
   cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 14px rgba(10, 20, 38, 0.08);
+  position: relative;
+  overflow: hidden;
 }
 
-.ff-partner-pill:hover {
-  transform: translateY(-3px);
-  border-color: var(--ff-primary);
-  box-shadow: 0 6px 18px rgba(0, 102, 255, 0.12);
+.ff-letterbox-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 24px rgba(0, 102, 255, 0.18);
 }
 
-.ff-partner-logo-box {
+/* Theme 1: Solid Blue Letterbox Card */
+.ff-box-blue {
+  background: linear-gradient(145deg, #0066FF 0%, #004ecc 100%);
+  color: #FFFFFF;
+  border: none;
+}
+
+.ff-box-blue .ff-box-title {
+  color: #FFFFFF;
+}
+
+.ff-box-blue .ff-box-sub {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* Theme 2: White Letterbox Card with Blue Border */
+.ff-box-white {
+  background-color: #FFFFFF;
+  border: 2.5px solid #0066FF;
+  color: #0A1426;
+}
+
+.ff-box-white .ff-box-title {
+  color: #0066FF;
+}
+
+.ff-box-white .ff-box-sub {
+  color: var(--ff-text-muted);
+}
+
+.ff-box-icon-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  height: 48px;
+  margin-bottom: 0.6rem;
 }
 
-.ff-partner-info {
+.ff-box-icon {
+  max-height: 44px;
+  max-width: 60px;
+  display: block;
+}
+
+.ff-box-content {
   display: flex;
   flex-direction: column;
-  line-height: 1.2;
+  align-items: center;
+  gap: 0.2rem;
 }
 
-.ff-partner-name {
+.ff-box-title {
   font-family: var(--ff-font-heading);
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--ff-text-main);
+  font-weight: 800;
+  font-size: 0.78rem;
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
-.ff-partner-cat {
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--ff-text-muted);
+.ff-box-sub {
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 /* ==========================================================================
@@ -1335,4 +1380,139 @@
 
 .ff-conditional-field.hidden {
   display: none;
+}
+
+/* ==========================================================================
+   16. DOCUMENT UPLOADS (W-9, COI, NOA, MC Authority)
+   ========================================================================== */
+.ff-doc-upload-section {
+  width: 100%;
+}
+
+.ff-doc-box {
+  background-color: #F8FAFC;
+  border: 1px solid var(--ff-border);
+  border-radius: var(--ff-radius-lg);
+  padding: 1.15rem;
+  transition: all var(--ff-transition-fast);
+}
+
+.ff-doc-box:hover {
+  border-color: var(--ff-primary);
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.06);
+}
+
+.ff-doc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.ff-doc-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ff-text-main);
+  margin: 0;
+}
+
+.ff-doc-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--ff-radius-full);
+  background-color: rgba(0, 102, 255, 0.1);
+  color: var(--ff-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ff-doc-dropzone {
+  position: relative;
+  border: 2px dashed #CBD5E1;
+  border-radius: var(--ff-radius-md);
+  padding: 1.15rem 0.85rem;
+  text-align: center;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  transition: all var(--ff-transition-fast);
+}
+
+.ff-doc-dropzone:hover,
+.ff-doc-dropzone.dragover {
+  border-color: var(--ff-primary);
+  background-color: rgba(0, 102, 255, 0.04);
+}
+
+.ff-file-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.ff-dropzone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  pointer-events: none;
+}
+
+.ff-doc-icon {
+  color: var(--ff-primary);
+  margin-bottom: 0.15rem;
+}
+
+.ff-dropzone-text {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ff-text-main);
+}
+
+.ff-dropzone-hint {
+  font-size: 0.72rem;
+  color: var(--ff-text-muted);
+}
+
+.ff-file-selected {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #ECFDF5;
+  border: 1px solid #10B981;
+  color: #065F46;
+  border-radius: var(--ff-radius-sm);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 6;
+}
+
+.ff-filename {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 160px;
+}
+
+.ff-remove-file-btn {
+  background: none;
+  border: none;
+  color: #DC2626;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.35rem;
+  transition: transform var(--ff-transition-fast);
+}
+
+.ff-remove-file-btn:hover {
+  transform: scale(1.25);
 }

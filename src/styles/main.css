@@ -395,9 +395,6 @@ img, svg {
 .delay-4 { transition-delay: 0.32s; }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after,
   .animate-on-scroll,
   .animate-on-scroll.revealed,
   .ff-slide.active .ff-hero-badge-wrap,

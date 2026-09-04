@@ -12,12 +12,8 @@ export function Footer() {
         <div class="ff-footer-grid">
           <!-- Col 1: Brand & Contact Info -->
           <div class="ff-footer-col">
-            <a href="/" class="ff-brand" style="margin-bottom: 1.25rem;">
-              <img src="/images/logo.jpg" alt="${COMPANY.name}" class="ff-logo-img" />
-              <div class="ff-brand-text">
-                <span class="ff-brand-name" style="color: #FFFFFF;">${COMPANY.name}</span>
-                <span class="ff-brand-tagline">Trucking & Logistics</span>
-              </div>
+            <a href="/" class="ff-brand ff-footer-brand" style="margin-bottom: 1.25rem; display: inline-block;">
+              <img src="/images/logo-transparent.png" alt="${COMPANY.name}" class="ff-footer-logo-img" />
             </a>
             <p class="ff-footer-brand-desc">
               ${COMPANY.shortDesc}

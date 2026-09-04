@@ -38,11 +38,7 @@ export function Header() {
     <header class="ff-header" id="main-header">
       <div class="ff-container ff-header-inner">
         <a href="/" class="ff-brand" aria-label="${COMPANY.name} Home">
-          <img src="/images/logo.jpg" alt="${COMPANY.name} Logo" class="ff-logo-img" />
-          <div class="ff-brand-text">
-            <span class="ff-brand-name">${COMPANY.name}</span>
-            <span class="ff-brand-tagline">Trucking & Logistics</span>
-          </div>
+          <img src="/images/logo-transparent.png" alt="${COMPANY.name} Logo" class="ff-logo-img" style="height: 44px; width: auto; object-fit: contain;" />
         </a>
 
         <!-- Desktop Navigation -->
@@ -56,9 +52,9 @@ export function Header() {
               </a>
               <ul class="ff-dropdown-menu">
                 <li class="ff-dropdown-item"><a href="/dispatch">Truck Dispatch</a></li>
+                <li class="ff-dropdown-item"><a href="/fleet-management">Fleet Management</a></li>
                 <li class="ff-dropdown-item"><a href="/freight-brokerage">Freight Brokerage</a></li>
                 <li class="ff-dropdown-item"><a href="/auto-hauling">Auto Car Hauling</a></li>
-                <li class="ff-dropdown-item"><a href="/fleet-management">Fleet Management</a></li>
               </ul>
             </li>
             <li class="ff-nav-item"><a href="/reviews" class="nav-link">Reviews</a></li>
@@ -86,8 +82,7 @@ export function Header() {
     <div class="ff-mobile-drawer" id="mobile-drawer">
       <div class="ff-drawer-header">
         <a href="/" class="ff-brand" id="drawer-brand">
-          <img src="/images/logo.jpg" alt="${COMPANY.name}" class="ff-logo-img" style="height: 42px;" />
-          <span class="ff-brand-name" style="font-size: 1.25rem;">${COMPANY.name}</span>
+          <img src="/images/logo-transparent.png" alt="${COMPANY.name}" class="ff-logo-img" style="height: 38px; width: auto; object-fit: contain;" />
         </a>
         <button class="ff-drawer-close" id="drawer-close-btn" aria-label="Close Menu">
           ${icon('X', '', 24)}

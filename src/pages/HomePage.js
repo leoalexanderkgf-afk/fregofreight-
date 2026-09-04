@@ -1,6 +1,5 @@
 /**
- * Fargo Freights - Complete Long-Form HomePage
- * Conforms strictly to the exact 19-section structure requested.
+ * Fargo Freights - Streamlined High-Performance HomePage
  */
 
 import { Header } from '../components/Header.js';
@@ -9,10 +8,6 @@ import { ServicesOverview } from '../components/ServicesOverview.js';
 import { AboutSection } from '../components/AboutSection.js';
 import { WhyChooseUs } from '../components/WhyChooseUs.js';
 import { StatsSection } from '../components/StatsSection.js';
-import { DispatchSection } from '../components/DispatchSection.js';
-import { FleetManagementSection } from '../components/FleetManagementSection.js';
-import { FreightBrokerageSection } from '../components/FreightBrokerageSection.js';
-import { AutoHaulingSection } from '../components/AutoHaulingSection.js';
 import { ProcessSection } from '../components/ProcessSection.js';
 import { TestimonialsSection } from '../components/TestimonialsSection.js';
 import { PartnersSection } from '../components/PartnersSection.js';
@@ -35,10 +30,6 @@ export function HomePage() {
       ${AboutSection()}
       ${WhyChooseUs()}
       ${StatsSection()}
-      ${DispatchSection()}
-      ${FleetManagementSection()}
-      ${FreightBrokerageSection()}
-      ${AutoHaulingSection()}
       ${ProcessSection()}
       ${TestimonialsSection()}
       ${PartnersSection()}
